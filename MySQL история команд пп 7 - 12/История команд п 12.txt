@@ -1,0 +1,170 @@
+mysql> create table all_tables
+
+    -> select 
+
+    ->   f.id f_id, f.type f_type, 
+
+    ->   fc.id fc_id, fc.animal fc_animal, fc.command fc_command, c1.id c1_id, c1.name c1_name,
+
+    ->   a.id a_id, a.form a_form, a.type a_type,
+
+    ->   ac.id ac_id, ac.animal ac_animal, ac.command ac_command, c2.id c2_id, c2.name c2_name,
+
+    ->   sa.id sa_id, sa.animal sa_animal, sa.type sa_type, 
+
+    ->   sac.id sac_id, sac.sub_animal sac_sub_animal, sac.command sac_command, c3.id c3_id, c3.name c3_name,
+
+    ->   
+
+    ->   hs.id hs_id, hs.name hs_name, hs.birthday hs_birthday,
+
+    ->   ct.id ct_id, ct.name ct_name, ct.birthday ct_birthday,
+
+    ->   d.id d_id, d.name d_name, d.birthday d_birthday, 
+
+    ->   dk.id dk_id, dk.name dk_name, dk.birthday dk_birthday,
+
+    ->   hm.id hm_id, hm.name hm_name, hm.birthday hm_birthday,
+
+    ->   cm.id cm_id, cm.name cm_name, cm.birthday cm_birthday,
+
+    ->   aa.sub_animal aa_sub_animal, aa.name aa_name, aa.birthday aa_birthday,
+
+    ->   ya.all_animal ya_all_animal, ya.age ya_age
+
+    ->  
+
+    -> from forms f
+
+    -> left join form_сommands fc on fc.animal = f.id
+
+    -> left join сommands c1 on c1.id = fc.command
+
+    -> left join animals a on a.form  = f.id
+
+    -> left join animal_сommands ac on ac.animal = a.id
+
+    -> left join сommands c2 on c2.id = ac.command
+
+    -> left join sub_animals sa on sa.animal = a.id
+
+    -> left join sub_animal_сommands sac on sac.sub_animal = sa.id
+
+    -> left join сommands c3 on c3.id = sac.command
+
+    -> 
+
+    -> left join horses hs on sa.type = 'Лошади'
+
+    -> left join cats ct on sa.type = 'Кошки' 
+
+    -> left join dogs d on sa.type = 'Собаки' 
+
+    -> left join donkeys dk on sa.type = 'Ослы' 
+
+    -> left join hamsters hm on sa.type = 'Хомяки' 
+
+    -> left join camels cm on sa.type = 'Верблюды'  
+
+    -> 
+
+    -> left join all_animals aa on aa.sub_animal = sa.id and 
+
+    ->   (aa.name = hs.name and aa.birthday = hs.birthday
+
+    -> or aa.name = ct.name and aa.birthday = ct.birthday
+
+    -> or aa.name = d.name and aa.birthday = d.birthday
+
+    -> or aa.name = dk.name and aa.birthday = dk.birthday
+
+    -> or aa.name = hm.name and aa.birthday = hm.birthday
+
+    -> or aa.name = cm.name and aa.birthday = cm.birthday)
+
+    -> 
+
+    -> left join young_animals ya on ya.all_animal = aa.id
+
+    -> 
+
+    -> order by f.id, fc.id, a.id, sa.id;
+
+Query OK, 30 rows affected (0,04 sec)
+
+Records: 30  Duplicates: 0  Warnings: 0
+
+
+
+mysql> select * from all_tables;
+
++------+------------------+-------+-----------+------------+-------+------------+------+--------+------------------+-------+-----------+------------+-------+--------------+-------+-----------+------------------+--------+----------------+-------------+-------+--------------+-------+----------+-------------+-------+------------+-------------+------+--------------+------------+-------+--------------+-------------+-------+----------+-------------+-------+---------+-------------+---------------+--------------+-------------+---------------+--------+
+
+| f_id | f_type           | fc_id | fc_animal | fc_command | c1_id | c1_name    | a_id | a_form | a_type           | ac_id | ac_animal | ac_command | c2_id | c2_name      | sa_id | sa_animal | sa_type          | sac_id | sac_sub_animal | sac_command | c3_id | c3_name      | hs_id | hs_name  | hs_birthday | ct_id | ct_name    | ct_birthday | d_id | d_name       | d_birthday | dk_id | dk_name      | dk_birthday | hm_id | hm_name  | hm_birthday | cm_id | cm_name | cm_birthday | aa_sub_animal | aa_name      | aa_birthday | ya_all_animal | ya_age |
+
++------+------------------+-------+-----------+------------+-------+------------+------+--------+------------------+-------+-----------+------------+-------+--------------+-------+-----------+------------------+--------+----------------+-------------+-------+--------------+-------+----------+-------------+-------+------------+-------------+------+--------------+------------+-------+--------------+-------------+-------+----------+-------------+-------+---------+-------------+---------------+--------------+-------------+---------------+--------+
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     1 |         1 | Лошади           |      1 |              1 |           4 |     4 | Носить       |     1 | Лола     | 2010-11-15  |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             1 | Лола         | 2010-11-15  |          NULL |   NULL |
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     1 |         1 | Лошади           |      1 |              1 |           4 |     4 | Носить       |     2 | Изюм     | 2004-05-17  |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             1 | Изюм         | 2004-05-17  |          NULL |   NULL |
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     2 |         1 | Верблюды         |      2 |              2 |           4 |     4 | Носить       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |          NULL | NULL         | NULL        |          NULL |   NULL |
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     3 |         1 | Ослы             |      3 |              3 |           4 |     4 | Носить       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |     1 | Иа           | 2012-02-02  |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             3 | Иа           | 2012-02-02  |          NULL |   NULL |
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     3 |         1 | Ослы             |      3 |              3 |           4 |     4 | Носить       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |     2 | Прялка       | 2007-11-13  |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             3 | Прялка       | 2007-11-13  |          NULL |   NULL |
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     4 |         2 | Кошки            |      4 |              4 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |     1 | Марфа      | 2022-05-23  | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             4 | Марфа        | 2022-05-23  |             5 |     14 |
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     4 |         2 | Кошки            |      4 |              4 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |     2 | Мурка      | 2008-12-05  | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             4 | Мурка        | 2008-12-05  |          NULL |   NULL |
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     5 |         2 | Собаки           |      5 |              5 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        |    1 | Лайка        | 2019-02-11 |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             5 | Лайка        | 2019-02-11  |          NULL |   NULL |
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     5 |         2 | Собаки           |      5 |              5 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        |    2 | Дружок       | 2015-07-08 |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             5 | Дружок       | 2015-07-08  |          NULL |   NULL |
+
+|    1 | Животные         |     1 |         1 |          1 |     1 | Есть       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     6 |         2 | Хомяки           |      6 |              6 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |     1 | Фома     | 2020-04-10  |  NULL | NULL    | NULL        |             6 | Фома         | 2020-04-10  |          NULL |   NULL |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     1 |         1 | Лошади           |      1 |              1 |           4 |     4 | Носить       |     1 | Лола     | 2010-11-15  |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             1 | Лола         | 2010-11-15  |          NULL |   NULL |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     1 |         1 | Лошади           |      1 |              1 |           4 |     4 | Носить       |     2 | Изюм     | 2004-05-17  |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             1 | Изюм         | 2004-05-17  |          NULL |   NULL |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     2 |         1 | Верблюды         |      2 |              2 |           4 |     4 | Носить       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |          NULL | NULL         | NULL        |          NULL |   NULL |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     3 |         1 | Ослы             |      3 |              3 |           4 |     4 | Носить       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |     2 | Прялка       | 2007-11-13  |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             3 | Прялка       | 2007-11-13  |          NULL |   NULL |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     3 |         1 | Ослы             |      3 |              3 |           4 |     4 | Носить       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |     1 | Иа           | 2012-02-02  |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             3 | Иа           | 2012-02-02  |          NULL |   NULL |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     4 |         2 | Кошки            |      4 |              4 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |     1 | Марфа      | 2022-05-23  | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             4 | Марфа        | 2022-05-23  |             5 |     14 |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     4 |         2 | Кошки            |      4 |              4 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |     2 | Мурка      | 2008-12-05  | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             4 | Мурка        | 2008-12-05  |          NULL |   NULL |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     5 |         2 | Собаки           |      5 |              5 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        |    1 | Лайка        | 2019-02-11 |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             5 | Лайка        | 2019-02-11  |          NULL |   NULL |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     5 |         2 | Собаки           |      5 |              5 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        |    2 | Дружок       | 2015-07-08 |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             5 | Дружок       | 2015-07-08  |          NULL |   NULL |
+
+|    1 | Животные         |     2 |         1 |          2 |     2 | Пить       |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     6 |         2 | Хомяки           |      6 |              6 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |     1 | Фома     | 2020-04-10  |  NULL | NULL    | NULL        |             6 | Фома         | 2020-04-10  |          NULL |   NULL |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     1 |         1 | Лошади           |      1 |              1 |           4 |     4 | Носить       |     1 | Лола     | 2010-11-15  |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             1 | Лола         | 2010-11-15  |          NULL |   NULL |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     1 |         1 | Лошади           |      1 |              1 |           4 |     4 | Носить       |     2 | Изюм     | 2004-05-17  |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             1 | Изюм         | 2004-05-17  |          NULL |   NULL |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     2 |         1 | Верблюды         |      2 |              2 |           4 |     4 | Носить       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |          NULL | NULL         | NULL        |          NULL |   NULL |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     3 |         1 | Ослы             |      3 |              3 |           4 |     4 | Носить       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |     1 | Иа           | 2012-02-02  |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             3 | Иа           | 2012-02-02  |          NULL |   NULL |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    1 |      1 | Вьючные          |     1 |         1 |          4 |     4 | Носить       |     3 |         1 | Ослы             |      3 |              3 |           4 |     4 | Носить       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |     2 | Прялка       | 2007-11-13  |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             3 | Прялка       | 2007-11-13  |          NULL |   NULL |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     4 |         2 | Кошки            |      4 |              4 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |     1 | Марфа      | 2022-05-23  | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             4 | Марфа        | 2022-05-23  |             5 |     14 |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     4 |         2 | Кошки            |      4 |              4 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |     2 | Мурка      | 2008-12-05  | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             4 | Мурка        | 2008-12-05  |          NULL |   NULL |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     5 |         2 | Собаки           |      5 |              5 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        |    1 | Лайка        | 2019-02-11 |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             5 | Лайка        | 2019-02-11  |          NULL |   NULL |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     5 |         2 | Собаки           |      5 |              5 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        |    2 | Дружок       | 2015-07-08 |  NULL | NULL         | NULL        |  NULL | NULL     | NULL        |  NULL | NULL    | NULL        |             5 | Дружок       | 2015-07-08  |          NULL |   NULL |
+
+|    1 | Животные         |     3 |         1 |          3 |     3 | Спать      |    2 |      1 | Домашние         |     2 |         2 |          5 |     5 | Играть       |     6 |         2 | Хомяки           |      6 |              6 |           5 |     5 | Играть       |  NULL | NULL     | NULL        |  NULL | NULL       | NULL        | NULL | NULL         | NULL       |  NULL | NULL         | NULL        |     1 | Фома     | 2020-04-10  |  NULL | NULL    | NULL        |             6 | Фома         | 2020-04-10  |          NULL |   NULL |
+
++------+------------------+-------+-----------+------------+-------+------------+------+--------+------------------+-------+-----------+------------+-------+--------------+-------+-----------+------------------+--------+----------------+-------------+-------+--------------+-------+----------+-------------+-------+------------+-------------+------+--------------+------------+-------+--------------+-------------+-------+----------+-------------+-------+---------+-------------+---------------+--------------+-------------+---------------+--------+
+
+30 rows in set (0,00 sec)
+

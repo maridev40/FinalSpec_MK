@@ -1,0 +1,338 @@
+mysql> use human_friends;
+
+Database changed
+
+mysql> show tables;
+
++-------------------------+
+
+| Tables_in_human_friends |
+
++-------------------------+
+
+| animal_сommands         |
+
+| animals                 |
+
+| camels                  |
+
+| cats                    |
+
+| dog_сommands            |
+
+| dogs                    |
+
+| donkeys                 |
+
+| form_сommands           |
+
+| forms                   |
+
+| hamsters                |
+
+| horses                  |
+
+| sub_animal_сommands     |
+
+| sub_animals             |
+
+| сommands                |
+
++-------------------------+
+
+14 rows in set (0,00 sec)
+
+
+
+mysql> 
+
+mysql> 
+
+mysql> select * from commands;
+
+ERROR 1146 (42S02): Table 'human_friends.commands' doesn't exist
+
+mysql> select * from сommands;
+
++----+------------------------------+
+
+| id | name                         |
+
++----+------------------------------+
+
+|  1 | Есть                         |
+
+|  2 | Пить                         |
+
+|  3 | Спать                        |
+
+|  4 | Носить                       |
+
+|  5 | Играть                       |
+
+|  6 | Ловить мышей                 |
+
+|  7 | Охранять                     |
+
+|  8 | Бегать в колесе              |
+
+|  9 | Быть поводырем               |
+
++----+------------------------------+
+
+9 rows in set (0,00 sec)
+
+
+
+mysql> select * from form_сommands;
+
++----+--------+---------+
+
+| id | animal | command |
+
++----+--------+---------+
+
+|  1 |      1 |       1 |
+
+|  2 |      1 |       2 |
+
+|  3 |      1 |       3 |
+
++----+--------+---------+
+
+3 rows in set (0,00 sec)
+
+
+
+mysql> select * from form_forms;
+
+ERROR 1146 (42S02): Table 'human_friends.form_forms' doesn't exist
+
+mysql> select * from forms;
+
++----+------------------+
+
+| id | type             |
+
++----+------------------+
+
+|  1 | Животные         |
+
++----+------------------+
+
+1 row in set (0,00 sec)
+
+
+
+mysql> select * from animals;
+
++----+------+------------------+
+
+| id | form | type             |
+
++----+------+------------------+
+
+|  1 |    1 | Вьючные          |
+
+|  2 |    1 | Домашние         |
+
++----+------+------------------+
+
+2 rows in set (0,00 sec)
+
+
+
+mysql> select * from animal_сommands;
+
++----+--------+---------+
+
+| id | animal | command |
+
++----+--------+---------+
+
+|  1 |      1 |       4 |
+
+|  2 |      2 |       5 |
+
++----+--------+---------+
+
+2 rows in set (0,00 sec)
+
+
+
+mysql> select * from sub_animals;
+
++----+--------+------------------+
+
+| id | animal | type             |
+
++----+--------+------------------+
+
+|  1 |      1 | Лошади           |
+
+|  2 |      1 | Верблюды         |
+
+|  3 |      1 | Ослы             |
+
+|  4 |      2 | Кошки            |
+
+|  5 |      2 | Собаки           |
+
+|  6 |      2 | Хомяки           |
+
++----+--------+------------------+
+
+6 rows in set (0,00 sec)
+
+
+
+mysql> select * from sub_animal_сommands;
+
++----+------------+---------+
+
+| id | sub_animal | command |
+
++----+------------+---------+
+
+|  1 |          1 |       4 |
+
+|  2 |          2 |       4 |
+
+|  3 |          3 |       4 |
+
+|  4 |          4 |       5 |
+
+|  5 |          5 |       5 |
+
+|  6 |          6 |       5 |
+
++----+------------+---------+
+
+6 rows in set (0,00 sec)
+
+
+
+mysql> select * from donkeys
+
+    -> ;
+
++------+--------------+------------+
+
+| id   | name         | birthday   |
+
++------+--------------+------------+
+
+|    1 | Иа           | 2012-02-02 |
+
+|    2 | Прялка       | 2007-11-13 |
+
++------+--------------+------------+
+
+2 rows in set (0,00 sec)
+
+
+
+mysql> select * horses;
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'horses' at line 1
+
+mysql> select * from horses;
+
++------+----------+------------+
+
+| id   | name     | birthday   |
+
++------+----------+------------+
+
+|    1 | Лола     | 2010-11-15 |
+
+|    2 | Изюм     | 2004-05-17 |
+
++------+----------+------------+
+
+2 rows in set (0,00 sec)
+
+
+
+mysql> select * from camels;
+
++------+----------+------------+
+
+| id   | name     | birthday   |
+
++------+----------+------------+
+
+|    1 | Холм     | 2015-01-22 |
+
++------+----------+------------+
+
+1 row in set (0,00 sec)
+
+
+
+mysql> select * from dogs;
+
++------+--------------+------------+
+
+| id   | name         | birthday   |
+
++------+--------------+------------+
+
+|    1 | Лайка        | 2019-02-11 |
+
+|    2 | Дружок       | 2015-07-08 |
+
++------+--------------+------------+
+
+2 rows in set (0,00 sec)
+
+
+
+mysql> select * from dog_сommands;
+
++----+------+---------+
+
+| id | dog  | command |
+
++----+------+---------+
+
+|  1 |    2 |       9 |
+
++----+------+---------+
+
+1 row in set (0,00 sec)
+
+
+
+mysql> select * from cats;
+
++------+------------+------------+
+
+| id   | name       | birthday   |
+
++------+------------+------------+
+
+|    1 | Марфа      | 2022-05-23 |
+
+|    2 | Мурка      | 2008-12-05 |
+
++------+------------+------------+
+
+2 rows in set (0,00 sec)
+
+
+
+mysql> select * from hamsters;
+
++------+----------+------------+
+
+| id   | name     | birthday   |
+
++------+----------+------------+
+
+|    1 | Фома     | 2020-04-10 |
+
++------+----------+------------+
+
+1 row in set (0,01 sec)
+

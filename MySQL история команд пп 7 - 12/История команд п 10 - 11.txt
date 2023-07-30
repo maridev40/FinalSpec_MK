@@ -1,0 +1,108 @@
+mysql> delete from camels;
+
+Query OK, 1 row affected (0,01 sec)
+
+
+mysql> create table all_animals (id int not null auto_increment, sub_animal int, name varchar(100), birthday date, primary key (id));
+
+Query OK, 0 rows affected (0,02 sec)
+
+
+mysql> insert into all_animals (sub_animal, name, birthday) 
+
+    -> select 1, name, birthday
+
+    -> from horses
+
+    -> union all
+
+    -> select 3, name, birthday
+
+    -> from donkeys
+
+    -> union all
+
+    -> select 4, name, birthday
+
+    -> from cats
+
+    -> union all
+
+    -> select 5, name, birthday
+
+    -> from dogs
+
+    -> union all
+
+    -> select 6, name, birthday
+
+    -> from hamsters;
+
+Query OK, 9 rows affected (0,02 sec)
+
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select  * from all_animals;
+
++----+------------+--------------+------------+
+
+| id | sub_animal | name         | birthday   |
+
++----+------------+--------------+------------+
+
+|  1 |          1 | Лола         | 2010-11-15 |
+
+|  2 |          1 | Изюм         | 2004-05-17 |
+
+|  3 |          3 | Иа           | 2012-02-02 |
+
+|  4 |          3 | Прялка       | 2007-11-13 |
+
+|  5 |          4 | Марфа        | 2022-05-23 |
+
+|  6 |          4 | Мурка        | 2008-12-05 |
+
+|  7 |          5 | Лайка        | 2019-02-11 |
+
+|  8 |          5 | Дружок       | 2015-07-08 |
+
+|  9 |          6 | Фома         | 2020-04-10 |
+
++----+------------+--------------+------------+
+
+9 rows in set (0,00 sec)
+
+
+mysql> create table young_animals (id int not null auto_increment, all_animal int, age int, primary key (id));
+
+Query OK, 0 rows affected (0,02 sec)
+
+
+
+mysql> insert into young_animals (all_animal, age) 
+
+    -> select id, TIMESTAMPDIFF(MONTH, birthday, CURDATE())
+
+    -> from all_animals
+
+    -> where TIMESTAMPDIFF(MONTH, birthday, CURDATE()) BETWEEN 1*12 AND 3*12;
+
+Query OK, 1 row affected (0,01 sec)
+
+Records: 1  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from young_animals;
+
++----+------------+------+
+
+| id | all_animal | age  |
+
++----+------------+------+
+
+|  1 |          5 |   14 |
+
++----+------------+------+
+
+1 row in set (0,00 sec)
+

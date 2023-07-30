@@ -1,0 +1,181 @@
+db@db-linux:~$ mysql -u root -p
+
+Enter password: 
+
+ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+
+db@db-linux:~$ sudo mysql -u root -p
+
+[sudo] пароль для db: 
+
+Enter password: 
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+
+Your MySQL connection id is 21
+
+Server version: 8.0.33-0ubuntu0.22.04.4 (Ubuntu)
+
+
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+
+affiliates. Other names may be trademarks of their respective
+
+owners.
+
+
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+
+
+mysql> show databases;
+
++--------------------+
+
+| Database           |
+
++--------------------+
+
+| information_schema |
+
+| mysql              |
+
+| performance_schema |
+
+| sys                |
+
++--------------------+
+
+4 rows in set (0,02 sec)
+
+
+
+mysql> 
+
+mysql> create database human_friends;
+
+Query OK, 1 row affected (0,02 sec)
+
+
+
+mysql> use human_friends;
+
+Database changed
+
+mysql> show  tables;
+
+Empty set (0,00 sec)
+
+
+
+mysql> 
+
+mysql> create table сommands (id int, name varchar(100));
+
+mysql> alter table сommands add primary key (id);
+
+mysql> insert into сommands (id, name) values 
+(1, 'Есть'), (2, 'Пить'), (3, 'Носить'), (4, 'Играть'), 
+(5, 'Ловить мышей'), (6, 'Охранять'), (7, 'Бегать в колесе');
+
+mysql> create table animals (id int, type varchar(100));
+
+mysql> alter table animals add primary key (id);
+
+mysql> insert into animals (id, type) values (1, 'Вьючные'), (2, 'Домашние');
+
+mysql> create table animal_сommands (id int, animal int, command int);
+
+mysql> alter table animal_сommands add primary key (id);
+
+mysql> insert into animal_сommands (id, animal, command) values 
+(1, 1, 1), (2, 1, 2), (3, 2, 1), (4, 2, 2);
+
+mysql> create table sub_animals (id int, pid int, type varchar(100));
+
+mysql> alter table sub_animals add primary key (id);
+
+mysql> insert into sub_animals (id, pid, type) values  (1, 1, 'Лошади'), (2, 1, 'Верблюды'), (3, 1, 'Ослы'), (4, 2, 'Кошки'), (5, 2, 'Собаки'), (6, 2, 'Хомяки');
+
+mysql> alter table sub_animals add primary key (id);
+
+mysql> alter table sub_animals add foreign key sub_animals_fk_pid (pid) references animals (id);
+
+mysql> create table donkeys (id int, name varchar(100), birthday date);
+
+mysql> insert into donkeys (id, name, birthday) values  (1, 'Иа', STR_TO_DATE('02.02.2012', '%d.%m.%Y')), (2, 'Прялка', STR_TO_DATE('13.11.2007', '%d.%m.%Y'));
+
+mysql> create table horses (id int, name varchar(100), birthday date);
+
+mysql> insert into horses (id, name, birthday) values  (1, 'Лола', STR_TO_DATE('15.11.2010', '%d.%m.%Y')), (2, 'Изюм', STR_TO_DATE('17.05.2004', '%d.%m.%Y'));
+
+mysql> create table camels (id int, name varchar(100), birthday date);
+
+mysql> insert into camels (id, name, birthday) values  (1, 'Холм', STR_TO_DATE('22.01.2015', '%d.%m.%Y'));
+
+mysql> create table dogs (id int, name varchar(100), birthday date);
+
+mysql> insert into dogs (id, name, birthday) values  (1, 'Лайка', STR_TO_DATE('11.02.2019', '%d.%m.%Y')), (2, 'Дружок', STR_TO_DATE('08.07.2015', '%d.%m.%Y'));
+
+mysql> create table cats (id int, name varchar(100), birthday date);
+
+mysql> insert into cats (id, name, birthday) values  (1, 'Марфа', STR_TO_DATE('23.05.2022', '%d.%m.%Y')), (2, 'Мурка', STR_TO_DATE('05.12.2008', '%d.%m.%Y'));
+
+mysql> create table hamsters (id int, name varchar(100), birthday date);
+
+mysql> insert into hamsters (id, name, birthday) values  (1, 'Фома', STR_TO_DATE('10.04.2020', '%d.%m.%Y'));
+
+mysql> show tables;
+
++-------------------------+
+
+| Tables_in_human_friends |
+
++-------------------------+
+
+| animals                 |
+
+| camels                  |
+
+| cats                    |
+
+| dogs                    |
+
+| donkeys                 |
+
+| hamsters                |
+
+| horses                  |
+
+| sub_animals             |
+
++-------------------------+
+
+8 rows in set (0,00 sec)
+
+donkeys
+horses
+camels
+--------
+dogs
+cats
+hamsters
+
+
+mysql> create table hamsters (id int, name varchar(100));
+
+mysql> insert into hamsters (id, name, birthday) values  (1, 'Фома', STR_TO_DATE('10.04.2020', '%d.%m.%Y'));
+
+
+
+
+
+
+
+
